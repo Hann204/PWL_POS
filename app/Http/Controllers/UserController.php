@@ -5,30 +5,59 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserModel;
+use App\Models\LevelModel;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $user = UserModel::create(
-            [
-                'username' => 'manager11',
-                'nama' => 'Manager11',
-                'password' => Hash::make('12345'),
-                'level_id' => 2,
-            ]
-        );
-        $user->username = 'manager12';
+        $user = UserModel::with('level')->get();
+        return view('user', ['data' => $user]);    
+    }
 
-        $user -> save();
+    public function tambah()
+    {
+        return view('user_tambah');
+    }
+
+    public function tambah_simpan(Request $request)
+    {
+        UserModel::create([
+            'username' => $request->username,
+            'nama' => $request->nama,
+            'password' => hash::make('$request->password'),
+            'level_id' => $request->level_id
+        ]);
+
+        return redirect('/user');
+    }
+
+    public function ubah($id)
+    {
+        $user = UserModel::find($id);
+        return view('user_ubah', ['data' => $user]);
+    }
+
+    public function ubah_simpan($id, Request $request)
+    {
+        $user  = UserModel::find($id);
     
-        $user->wasChanged();
-        $user->WasChanged('username');
-        $user->WasChanged('username', 'level_id');
-        $user->WasChanged('nama');
+        $user->username =  $request->username;
+        $user->nama = $request->nama;
+        $user->password = Hash::make($request->password); // Hilangkan tanda kutip
+        $user->level_id = $request->level_id;
+    
+        $user->save();
+    
+        return redirect('/user');
+    }
+    
+    public function hapus($id)
+    {
+        $user = UserModel::find($id);
+        $user->delete();
 
-        dd($user->wasChanged(['nama', 'username']));
+        return redirect('/user');
     }
 }
- 
