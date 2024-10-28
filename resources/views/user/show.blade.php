@@ -18,7 +18,7 @@
                         <th>ID</th>
                         <td>{{ $user->user_id }}</td>
                     </tr>
-                        <tr>
+                    <tr>
                         <th>Level</th>
                         <td>{{ $user->level->level_nama }}</td>
                     </tr>
@@ -28,17 +28,17 @@
                     </tr>
                     <tr>
                         <th>Nama</th>
-                        <td>{{ $user->nama }}</td>
+                        <td>{{ $user->name }}</td>
                     </tr>
                     <tr>
                         <th>Password</th>
                         <td>********</td>
                     </tr>
                 </table>
-@endempty
-<a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
-</div>
-</div>
+            @endempty
+            <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+        </div>
+    </div>
 @endsection
 
 @push('css')

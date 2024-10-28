@@ -3,9 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal" aria label="Close"><span
+                        aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
@@ -24,36 +23,42 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Data User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Level Pengguna</label>
                         <select name="level_id" id="level_id" class="form-control" required>
                             <option value="">- Pilih Level -</option>
-                            @foreach($level as $l)
-                                <option {{ ($l->level_id == $user->level_id) ? 'selected' : '' }} value="{{ $l->level_id }}">
-                                    {{ $l->level_nama }}
-                                </option>
+                            @foreach ($level as $l)
+                                <option {{ $l->level_id == $user->level_id ? 'selected' : '' }} value="{{ $l->level_id }}">
+                                    {{ $l->level_nama }}</option>
                             @endforeach
                         </select>
                         <small id="error-level_id" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Username</label>
-                        <input value="{{ $user->username }}" type="text" name="username" id="username" class="form-control" required>
+                        <input value="{{ $user->username }}" type="text" name="username" id="username"
+                            class="form-control" required>
                         <small id="error-username" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Nama</label>
-                        <input value="{{ $user->nama }}" type="text" name="nama" id="nama" class="form-control" required>
+                        <input value="{{ $user->name }}" type="text" name="name" id="name" class="form-control"
+                            required>
                         <small id="error-nama" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
+                        <label>Foto Profil</label>
+                        <input type="file" name="file_profil" id="file_profil" class="form-control">
+                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah foto profil</small>
+                        <small id="error-file_profil" class="error-text form-text text-danger"></small>
+                    </div>
+                    <div class="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" id="password" class="form-control">
+                        <input value="" type="password" name="password" id="password" class="form-control">
                         <small class="form-text text-muted">Abaikan jika tidak ingin ubah password</small>
                         <small id="error-password" class="error-text form-text text-danger"></small>
                     </div>
@@ -65,21 +70,42 @@
             </div>
         </div>
     </form>
-
     <script>
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    level_id: { required: true, number: true },
-                    username: { required: true, minlength: 3, maxlength: 20 },
-                    nama: { required: true, minlength: 3, maxlength: 100 },
-                    password: { minlength: 6, maxlength: 20 }
+                    level_id: {
+                        required: true,
+                        number: true
+                    },
+                    username: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+                    name: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 100
+                    },
+                    password: {
+                        minlength: 6,
+                        maxlength: 20
+                    },
+                    file_profil: {
+                        extension: "jpg|jpeg|png|ico|bmp"
+                    }
                 },
                 submitHandler: function(form) {
+                    var formData = new FormData(
+                form); // Jadikan form ke FormData untuk menghandle file 
+
                     $.ajax({
                         url: form.action,
                         type: form.method,
-                        data: $(form).serialize(),
+                        data: formData,
+                        processData: false, // setting processData dan contentType ke false, untuk menghandle file 
+                    contentType: false,
                         success: function(response) {
                             if (response.status) {
                                 $('#myModal').modal('hide');

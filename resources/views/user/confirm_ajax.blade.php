@@ -3,9 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal" aria label="Close"><span
+                        aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
@@ -24,9 +23,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Hapus Data User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
@@ -44,7 +42,7 @@
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama :</th>
-                            <td class="col-9">{{ $user->nama }}</td>
+                            <td class="col-9">{{ $user->name }}</td>
                         </tr>
                     </table>
                 </div>
@@ -55,7 +53,6 @@
             </div>
         </div>
     </form>
-
     <script>
         $(document).ready(function() {
             $("#form-delete").validate({
@@ -66,7 +63,7 @@
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if(response.status) {
+                            if (response.status) {
                                 $('#myModal').modal('hide');
                                 Swal.fire({
                                     icon: 'success',
@@ -104,4 +101,3 @@
         });
     </script>
 @endempty
-SS
