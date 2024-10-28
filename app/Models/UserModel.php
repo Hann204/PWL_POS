@@ -10,9 +10,16 @@ use Tymon\JWTAuth\Contracts\JWTSubject;// implementasi class Authenticatable
 
 class UserModel extends Authenticatable implements JWTSubject
 {
-    public function getJWTIdentifier(){}
-    public  function getJWTCustomClaims(){}
-   
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    // Method ini mengembalikan klaim tambahan untuk JWT
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
