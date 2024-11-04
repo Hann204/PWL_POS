@@ -1,5 +1,4 @@
 @extends('layouts.template')
-
 @section('content')
     <div class="card card-outline card-primary">
         <div class="card-header">
@@ -28,11 +27,15 @@
                     </tr>
                     <tr>
                         <th>Nama</th>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->nama }}</td>
                     </tr>
                     <tr>
                         <th>Password</th>
                         <td>********</td>
+                    </tr>
+                    <tr>
+                        <th>foto</th>
+                        <td><img src=" {{ asset($user->foto) }} " height="100" alt="Foto Kosong"></td>
                     </tr>
                 </table>
             @endempty
@@ -40,9 +43,7 @@
         </div>
     </div>
 @endsection
-
 @push('css')
 @endpush
-
 @push('js')
 @endpush

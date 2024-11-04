@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('m_user', function (Blueprint $table) {
             $table->id('user_id');
             $table->unsignedBigInteger('level_id')->index();
-            $table->string('username',20)->unique();
-            $table->string('nama',100);
-            $table->string('password');
-            $table->timestamps();
-
-            $table->foreign('level_id')->references('level_id')->on('m_level');
+            $table->string('username', 20)->unique();
+            $table->string('nama', 100);
+            $table->string('password', 255);
+            $table->string('foto', 255)->nullable();
+            $table->timestamps(); // Kolom created_at dan updated_at otomatis nullable
+            $table->foreign('level_id')->references('level_id')->on('m_level')->onDelete('cascade'); // tambahkan onDelete jika perlu
         });
     }
 

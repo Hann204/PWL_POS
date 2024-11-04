@@ -1,4 +1,4 @@
-<form action="{{ url('/user/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/user/ajax') }}" method="POST" id="form-tambah" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -25,18 +25,18 @@
                 </div>
                 <div class="form-group">
                     <label>Nama</label>
-                    <input value="" type="text" name="name" id="name" class="form-control" required>
-                    <small id="error-name" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>Foto Profil</label>
-                    <input type="file" name="file_profil" id="file_profil" class="form-control" required>
-                    <small id="error-file_profil" class="error-text form-text text-danger"></small>
+                    <input value="" type="text" name="nama" id="nama" class="form-control" required>
+                    <small id="error-nama" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
                     <input value="" type="password" name="password" id="password" class="form-control" required>
                     <small id="error-password" class="error-text form-text text-danger"></small>
+                </div>
+                <div class="form-group">
+                    <label>Foto</label>
+                    <input value="" type="file" name="foto" id="foto" class="form-control" accept=".png,.jpg,.jpeg">
+                    <small id="error-foto" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -59,7 +59,7 @@
                     minlength: 3,
                     maxlength: 20
                 },
-                name: {
+                nama: {
                     required: true,
                     minlength: 3,
                     maxlength: 100
@@ -69,21 +69,19 @@
                     minlength: 6,
                     maxlength: 20
                 },
-                file_profil: {
-                    required: true,
-                    extension: "jpg|jpeg|png|ico|bmp"
-                }
+                foto: {
+                    accept: "png,jpg,jpeg"
+                },
             },
             submitHandler: function(form) {
                 var formData = new FormData(
-                form); // Jadikan form ke FormData untuk menghandle file 
-
+                form);
                 $.ajax({
                     url: form.action,
                     type: form.method,
                     data: formData,
-                    processData: false, // setting processData dan contentType ke false, untuk menghandle file 
-                    contentType: false,
+                            processData: false, // setting processData dan contentType ke false, untuk menghandle file 
+                            contentType: false,
                     success: function(response) {
                         if (response.status) {
                             $('#myModal').modal('hide');
@@ -92,7 +90,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            dataUser.ajax.reload();
+                            tableUser.ajax.reload();
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {
